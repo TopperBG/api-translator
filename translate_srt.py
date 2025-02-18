@@ -18,8 +18,8 @@ client = OpenAI(api_key=API_KEY, base_url=BASE_URL)
 
 def list_files_in_directory(directory="/app/data"):
     try:
-        result = subprocess.run(['ls', '-al', directory], capture_output=True, text=True)
-        print(f"Target files: {result.stdout}")
+        files = os.listdir(directory)
+        print(f"Target files: {', '.join(files)}")
     except Exception as e:
         print(f"Error occurred: {e}")
 
@@ -43,7 +43,7 @@ def translate_srt(input_srt, target_lang="bg"):
         new_sub = pysrt.SubRipItem(index=sub.index, start=sub.start, end=sub.end, text=translated_text)
         translated_subs.append(new_sub)
 
-    output_srt = f"{os.path.splitext(input_srt)[0]}_{target_lang}.srt"
+    output_srt = f"{os.path.splitext(input_srt)[0]}.{target_lang}.srt"
     translated_subs.save(output_srt, encoding='utf-8')
     print(f"✅ Translated: {input_srt} → {output_srt}")
 

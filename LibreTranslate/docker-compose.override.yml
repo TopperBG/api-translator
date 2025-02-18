@@ -1,0 +1,4 @@
+version: "3.8"
+services:
+  api-translate:
+    command: ["libre-translateV3.py"]
